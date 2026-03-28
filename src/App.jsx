@@ -93,6 +93,14 @@ function fmt(val, prefix, unit) {
   return `${prefix}${typeof val === 'number' ? val.toLocaleString('en-IN', { maximumFractionDigits: 1 }) : val}${unit ? ' ' + unit : ''}`;
 }
 
+function downloadFile(content, filename, type = 'application/json') {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
 // ─── Tooltip ─────────────────────────────────────────────────────────────────
 function InfoTooltip({ text }) {
   const [show, setShow] = useState(false);
@@ -441,23 +449,43 @@ function EditModal({ panel, onSave, onClose }) {
   );
 }
 
-// ─── Add Metric Modal ─────────────────────────────────────────────────────────
+// ─── Add Metric Modal (multi-select) ─────────────────────────────────────────
 function AddMetricModal({ onAdd, onClose, existingIds }) {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(new Set());
   const available = METRIC_TEMPLATES.filter(t => t.id === 'custom' || !existingIds.includes(t.id));
 
-  const handleAdd = () => {
-    if (!selected) return;
-    const template = METRIC_TEMPLATES.find(t => t.id === selected);
-    const DAYS = generateDays(30);
-    const newPanel = {
-      ...template,
-      id: selected === 'custom' ? `custom-${Date.now()}` : template.id,
-      data: template.defaultData ? template.defaultData() : DAYS.map(date => ({ date, value: 0 })),
-    };
-    delete newPanel.defaultData;
-    onAdd(newPanel);
+  const toggleSelection = (id) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
   };
+
+  const handleAdd = () => {
+    if (selected.size === 0) return;
+    const DAYS = generateDays(30);
+    const newPanels = [];
+    for (const id of selected) {
+      const template = METRIC_TEMPLATES.find(t => t.id === id);
+      if (!template) continue;
+      const newPanel = {
+        ...template,
+        id: id === 'custom' ? `custom-${Date.now()}-${Math.random().toString(36).slice(2, 6)}` : template.id,
+        data: template.defaultData ? template.defaultData() : DAYS.map(date => ({ date, value: 0 })),
+      };
+      delete newPanel.defaultData;
+      newPanels.push(newPanel);
+    }
+    onAdd(newPanels);
+  };
+
+  const count = selected.size;
+  const btnLabel = count === 0 ? '+ Add Panel' : count === 1 ? '+ Add Panel' : `+ Add ${count} Panels`;
 
   const overlay = { position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 };
   const modal = { background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: 28, width: '100%', maxWidth: 620, maxHeight: '85vh', overflowY: 'auto' };
@@ -470,44 +498,84 @@ function AddMetricModal({ onAdd, onClose, existingIds }) {
           <button style={{ ...css.btnGhost, padding: '6px 12px' }} onClick={onClose}>✕</button>
         </div>
         <p style={{ fontSize: 13, color: C.muted, marginBottom: 24 }}>
-          Pick from common consumer startup metrics or add a blank custom panel.
+          Pick from common consumer startup metrics or add a blank custom panel. Select multiple to add them all at once.
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 24 }}>
-          {available.map(t => (
-            <div
-              key={t.id}
-              onClick={() => setSelected(t.id)}
-              style={{
-                background: selected === t.id ? t.color + '18' : C.surface,
-                border: `1px solid ${selected === t.id ? t.color : C.border}`,
-                borderRadius: 10, padding: '14px 16px', cursor: 'pointer',
-                transition: 'all 0.15s',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                <div style={{ width: 8, height: 8, borderRadius: '50%', background: t.color, flexShrink: 0 }} />
-                <span style={{ fontSize: 14, fontWeight: 600, color: C.text }}>{t.title}</span>
+          {available.map(t => {
+            const isSelected = selected.has(t.id);
+            return (
+              <div
+                key={t.id}
+                onClick={() => toggleSelection(t.id)}
+                style={{
+                  background: isSelected ? t.color + '18' : C.surface,
+                  border: `1px solid ${isSelected ? t.color : C.border}`,
+                  borderRadius: 10, padding: '14px 16px', cursor: 'pointer',
+                  transition: 'all 0.15s',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                  <div style={{
+                    width: 18, height: 18, borderRadius: 4, flexShrink: 0,
+                    border: `2px solid ${isSelected ? t.color : C.border}`,
+                    background: isSelected ? t.color : 'transparent',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'all 0.15s',
+                  }}>
+                    {isSelected && (
+                      <span style={{ color: '#fff', fontSize: 11, fontWeight: 800, lineHeight: 1 }}>✓</span>
+                    )}
+                  </div>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: C.text }}>{t.title}</span>
+                </div>
+                {t.tooltip && (
+                  <p style={{ fontSize: 12, color: C.muted, lineHeight: 1.5, margin: 0, paddingLeft: 26 }}>
+                    {t.tooltip.split('.')[0]}.
+                  </p>
+                )}
               </div>
-              {t.tooltip && (
-                <p style={{ fontSize: 12, color: C.muted, lineHeight: 1.5, margin: 0 }}>
-                  {t.tooltip.split('.')[0]}.
-                </p>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div style={{ display: 'flex', gap: 10 }}>
           <button
-            style={{ ...css.btn(C.accent), opacity: selected ? 1 : 0.4 }}
-            disabled={!selected}
+            style={{ ...css.btn(C.accent), opacity: count > 0 ? 1 : 0.4 }}
+            disabled={count === 0}
             onClick={handleAdd}
           >
-            + Add Panel
+            {btnLabel}
           </button>
           <button style={css.btnGhost} onClick={onClose}>Cancel</button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Compact Panel ────────────────────────────────────────────────────────────
+function CompactPanel({ panel }) {
+  const latest = panel.type === 'ranked'
+    ? panel.items?.[0]?.value
+    : panel.data?.[panel.data.length - 1]?.value ?? 0;
+  const d = panel.type !== 'ranked' ? delta(panel.data) : null;
+  const colour = clr(latest, panel.target, panel.higherIsBetter);
+  const dGood = panel.higherIsBetter ? d > 0 : d < 0;
+
+  return (
+    <div style={{ ...css.card, padding: 16, position: 'relative' }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: panel.color, borderRadius: '16px 16px 0 0', opacity: 0.8 }} />
+      <div style={{ fontSize: 12, fontWeight: 600, color: C.muted, marginBottom: 8 }}>{panel.title}</div>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+        <span style={{ fontSize: 28, fontWeight: 800, color: colour, fontFamily: "'DM Mono', monospace", lineHeight: 1 }}>
+          {panel.type === 'ranked' ? `${latest}%` : fmt(latest, panel.prefix || '', panel.unit || '')}
+        </span>
+        {d !== null && (
+          <span style={{ fontSize: 11, color: dGood ? C.green : C.red, fontFamily: "'DM Mono', monospace" }}>
+            {d > 0 ? '\u2191' : '\u2193'}{Math.abs(d)}%
+          </span>
+        )}
       </div>
     </div>
   );
@@ -519,7 +587,12 @@ export default function App() {
   const [editPanel, setEditPanel] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
   const [showReset, setShowReset] = useState(false);
-  const CORE_IDS = ['time-to-order', 'aov', 'dau-mau', 'dropoff'];
+  const [compact, setCompact] = useLocalStorage('startboard-compact', false);
+  const [showExport, setShowExport] = useState(false);
+  const CORE_IDS = ['time-to-order', 'aov', 'dau-mau', 'dropoff', 'repeat-order-rate', 'cac'];
+
+  const dragRef = useRef(null);
+  const dragOverRef = useRef(null);
 
   const handleSave = useCallback((updated) => {
     setPanels(prev => prev.map(p => p.id === updated.id ? updated : p));
@@ -530,14 +603,37 @@ export default function App() {
     setPanels(prev => prev.filter(p => p.id !== id));
   }, [setPanels]);
 
-  const handleAdd = useCallback((newPanel) => {
-    setPanels(prev => [...prev, newPanel]);
+  const handleAdd = useCallback((newPanels) => {
+    const arr = Array.isArray(newPanels) ? newPanels : [newPanels];
+    setPanels(prev => [...prev, ...arr]);
     setShowAdd(false);
   }, [setPanels]);
 
   const handleReset = () => {
     setPanels(DEFAULT_PANELS);
     setShowReset(false);
+  };
+
+  const handleExportJSON = () => {
+    downloadFile(JSON.stringify(panels, null, 2), 'startboard-export.json', 'application/json');
+    setShowExport(false);
+  };
+
+  const handleExportCSV = () => {
+    const rows = ['panel_name,date,value,unit,target'];
+    for (const panel of panels) {
+      if (panel.type === 'ranked') {
+        for (const item of (panel.items || [])) {
+          rows.push(`"${panel.title}","${item.screen}",${item.value},"%",`);
+        }
+      } else {
+        for (const d of (panel.data || [])) {
+          rows.push(`"${panel.title}","${d.date}",${d.value},"${panel.unit || ''}",${panel.target ?? ''}`);
+        }
+      }
+    }
+    downloadFile(rows.join('\n'), 'startboard-export.csv', 'text/csv');
+    setShowExport(false);
   };
 
   const renderPanel = (panel) => {
@@ -548,6 +644,38 @@ export default function App() {
     return <TrendPanel key={panel.id} {...props} />;
   };
 
+  const corePanels = panels.filter(p => CORE_IDS.includes(p.id));
+  const customPanels = panels.filter(p => !CORE_IDS.includes(p.id));
+
+  const handleDragStart = (globalIndex) => {
+    dragRef.current = globalIndex;
+  };
+
+  const handleDragEnter = (globalIndex) => {
+    dragOverRef.current = globalIndex;
+  };
+
+  const handleDragEnd = () => {
+    const from = dragRef.current;
+    const to = dragOverRef.current;
+    if (from !== null && to !== null && from !== to) {
+      setPanels(prev => {
+        const ordered = [...corePanels, ...customPanels];
+        const copy = [...ordered];
+        const [moved] = copy.splice(from, 1);
+        copy.splice(to, 0, moved);
+        return copy;
+      });
+    }
+    dragRef.current = null;
+    dragOverRef.current = null;
+  };
+
+  const allOrdered = [...corePanels, ...customPanels];
+  const gridCols = compact
+    ? 'repeat(auto-fill, minmax(220px, 1fr))'
+    : 'repeat(auto-fill, minmax(340px, 1fr))';
+
   return (
     <div style={css.app}>
       <div style={css.glow} />
@@ -557,10 +685,65 @@ export default function App() {
         <div style={{ ...css.wrap, padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
           <div>
             <span style={{ fontSize: 18, fontWeight: 800, color: '#fff', letterSpacing: '-0.5px' }}>startboard</span>
-            <span style={{ fontSize: 12, color: C.muted, fontFamily: "'DM Mono', monospace", marginLeft: 10 }}>the 4 metrics that matter</span>
+            <span style={{ fontSize: 12, color: C.muted, fontFamily: "'DM Mono', monospace", marginLeft: 10 }}>the 6 metrics that matter</span>
           </div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <button style={css.btn(C.accent + '22', C.accent)} onClick={() => setShowAdd(true)}>+ Add Metric</button>
+
+            {/* Compact / Expanded toggle */}
+            <button
+              style={css.btnGhost}
+              onClick={() => setCompact(prev => !prev)}
+              title={compact ? 'Switch to expanded view' : 'Switch to compact view'}
+            >
+              {compact ? (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
+                  Expanded
+                </span>
+              ) : (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>
+                  Compact
+                </span>
+              )}
+            </button>
+
+            {/* Export dropdown */}
+            <div style={{ position: 'relative' }}>
+              <button style={css.btnGhost} onClick={() => setShowExport(prev => !prev)}>Export</button>
+              {showExport && (
+                <div style={{
+                  position: 'absolute', top: '110%', right: 0, background: C.card,
+                  border: `1px solid ${C.border}`, borderRadius: 10, padding: 6,
+                  minWidth: 160, zIndex: 100, boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+                }}>
+                  <div
+                    onClick={handleExportJSON}
+                    style={{
+                      padding: '8px 14px', fontSize: 13, color: C.text, cursor: 'pointer',
+                      borderRadius: 6, transition: 'background 0.15s',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = C.surface; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                  >
+                    Export JSON
+                  </div>
+                  <div
+                    onClick={handleExportCSV}
+                    style={{
+                      padding: '8px 14px', fontSize: 13, color: C.text, cursor: 'pointer',
+                      borderRadius: 6, transition: 'background 0.15s',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = C.surface; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                  >
+                    Export CSV
+                  </div>
+                </div>
+              )}
+            </div>
+
             <button style={css.btnGhost} onClick={() => setShowReset(true)}>Reset</button>
           </div>
         </div>
@@ -568,22 +751,53 @@ export default function App() {
 
       {/* Dashboard grid */}
       <div style={{ ...css.wrap, paddingTop: 32 }}>
-        {/* Core 4 always first */}
+        {/* Core metrics section label */}
         <div style={{ marginBottom: 12 }}>
           <span style={{ fontSize: 11, color: C.muted, fontFamily: "'DM Mono', monospace", letterSpacing: '0.1em', textTransform: 'uppercase' }}>Core metrics</span>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 20, marginBottom: 32 }}>
-          {panels.filter(p => CORE_IDS.includes(p.id)).map(renderPanel)}
+
+        <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 20, marginBottom: 32 }}>
+          {corePanels.map((panel, sectionIdx) => {
+            const globalIdx = sectionIdx;
+            return (
+              <div
+                key={panel.id}
+                draggable
+                onDragStart={() => handleDragStart(globalIdx)}
+                onDragEnter={() => handleDragEnter(globalIdx)}
+                onDragEnd={handleDragEnd}
+                onDragOver={e => e.preventDefault()}
+                style={{ cursor: 'grab' }}
+              >
+                {compact ? <CompactPanel panel={panel} /> : renderPanel(panel)}
+              </div>
+            );
+          })}
         </div>
 
         {/* Custom panels */}
-        {panels.some(p => !CORE_IDS.includes(p.id)) && (
+        {customPanels.length > 0 && (
           <>
             <div style={{ marginBottom: 12 }}>
               <span style={{ fontSize: 11, color: C.muted, fontFamily: "'DM Mono', monospace", letterSpacing: '0.1em', textTransform: 'uppercase' }}>Custom metrics</span>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 20, marginBottom: 32 }}>
-              {panels.filter(p => !CORE_IDS.includes(p.id)).map(renderPanel)}
+            <div style={{ display: 'grid', gridTemplateColumns: gridCols, gap: 20, marginBottom: 32 }}>
+              {customPanels.map((panel, sectionIdx) => {
+                const globalIdx = corePanels.length + sectionIdx;
+                return (
+                  <div
+                    key={panel.id}
+                    draggable
+                    onDragStart={() => handleDragStart(globalIdx)}
+                    onDragEnter={() => handleDragEnter(globalIdx)}
+                    onDragEnd={handleDragEnd}
+                    onDragOver={e => e.preventDefault()}
+                    style={{ cursor: 'grab' }}
+                  >
+                    {compact ? <CompactPanel panel={panel} /> : renderPanel(panel)}
+                  </div>
+                );
+              })}
             </div>
           </>
         )}
@@ -601,7 +815,7 @@ export default function App() {
           onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.muted; }}
         >
           <span style={{ fontSize: 20 }}>+</span>
-          <span>Add another metric — Churn, CAC, LTV, NPS, and more</span>
+          <span>Add another metric — Churn, LTV, NPS, and more</span>
         </div>
       </div>
 
@@ -623,13 +837,21 @@ export default function App() {
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ ...css.card, maxWidth: 360, width: '100%' }}>
             <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 10 }}>Reset to demo data?</div>
-            <div style={{ fontSize: 13, color: C.muted, marginBottom: 24 }}>This will remove your custom metrics and restore the original 4 panels.</div>
+            <div style={{ fontSize: 13, color: C.muted, marginBottom: 24 }}>This will remove your custom metrics and restore the original 6 panels.</div>
             <div style={{ display: 'flex', gap: 10 }}>
               <button style={css.btn(C.red)} onClick={handleReset}>Reset</button>
               <button style={css.btnGhost} onClick={() => setShowReset(false)}>Cancel</button>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Close export dropdown when clicking outside */}
+      {showExport && (
+        <div
+          style={{ position: 'fixed', inset: 0, zIndex: 9 }}
+          onClick={() => setShowExport(false)}
+        />
       )}
     </div>
   );

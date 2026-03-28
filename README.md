@@ -2,11 +2,11 @@
 
 ![startboard banner](./banner.png)
 
-> The 4 metrics that actually matter for an early-stage consumer app — in one screen, no noise.
+> The 6 metrics that actually matter for an early-stage consumer app — in one screen, no noise.
 
-Built because Mixpanel showed everything except what I needed to decide whether to keep building or pivot. Staring at dashboards full of events and funnels, what I actually needed was 4 numbers: how long it takes a new user to place their first order, what they're spending, whether they're coming back, and which screens are killing conversion.
+Built because Mixpanel showed everything except what I needed to decide whether to keep building or pivot. Staring at dashboards full of events and funnels, what I actually needed was 6 numbers: how fast users convert, what they spend, whether they come back, where they drop off, whether they reorder, and what it costs to acquire them.
 
-Startboard shows those 4 numbers. And lets you add more when you need them.
+Startboard shows those 6 numbers. And lets you add more when you need them.
 
 ---
 
@@ -17,16 +17,21 @@ Startboard shows those 4 numbers. And lets you add more when you need them.
 | **Time to First Order** | Avg days from signup to first purchase, trended | Your north star. Under 3 days = strong pull. Over 7 = friction. |
 | **AOV** | Average order value with trend line | Rising AOV + rising orders = product-market fit signal |
 | **DAU/MAU** | Engagement ratio, trended with raw DAU + MAU | Above 20% = healthy for a consumer app |
+| **Repeat Order Rate** | % of users who order again within 60 days | Above 30% = genuine habit formation |
+| **Customer Acquisition Cost** | Trended CAC with target benchmark | CAC should be less than 1/3 of LTV |
 | **Drop-off Screens** | Ranked list of screens by drop-off %, colour coded | Fix the top 2 before building anything new |
 
-Plus — add any metric from the library: Churn Rate, CAC, LTV, NPS, Refund Rate, Session Length, Repeat Order Rate, Orders per Day, and more. Or define your own.
+Plus — add any metric from the library: Churn Rate, LTV, NPS, Refund Rate, Session Length, Orders per Day, and more. Or define your own.
 
 ---
 
 ## Features
 
-- **4 core panels** preloaded with realistic demo data
-- **Add metric library** — 9 common consumer startup metrics, pre-configured with tooltips and target benchmarks
+- **6 core panels** preloaded with realistic demo data
+- **Multi-select metric library** — select multiple metrics at once and add them all in one click
+- **Compact view** — toggle between full chart view and condensed numbers-only mode
+- **Drag to reorder** — rearrange panels by dragging them
+- **Export** — download all metric data as JSON or CSV
 - **Custom panels** — add blank panels with your own name, unit, target, and colour
 - **Inline editing** — click Edit on any panel to update values directly
 - **CSV data entry** — paste date,value rows to bulk-update any panel
@@ -68,8 +73,8 @@ Home → Product Detail, 41
 Cart → Checkout, 18
 ```
 
-### Option 2 — Add a new metric
-Click **+ Add Metric** in the header. Pick from the library or choose "Custom Metric" to start blank. Demo data pre-fills so the panel looks complete immediately — edit it to replace with your real numbers.
+### Option 2 — Add new metrics
+Click **+ Add Metric** in the header. Select one or more metrics from the library, or choose "Custom Metric" to start blank. Demo data pre-fills so panels look complete immediately — edit them to replace with your real numbers.
 
 ---
 
@@ -98,7 +103,7 @@ npm run build
 
 ## Origin
 
-This came out of running Pikvita — a hyperlocal grocery marketplace in Bangalore. We had Mixpanel, we had GA4, we had Appsflyer. And every Monday morning I'd open five tabs and spend 20 minutes piecing together the same 4 numbers to figure out if we were growing or dying.
+This came out of running Pikvita — a hyperlocal grocery marketplace in Bangalore. We had Mixpanel, we had GA4, we had Appsflyer. And every Monday morning I'd open five tabs and spend 20 minutes piecing together the same 6 numbers to figure out if we were growing or dying.
 
 Startboard is the dashboard I wish existed. One screen, the numbers that matter, no setup.
 

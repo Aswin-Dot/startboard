@@ -1,7 +1,7 @@
 {
   "name": "startboard",
   "version": "0.1.0",
-  "description": "The 4 metrics that actually matter for an early-stage consumer app",
+  "description": "The 6 metrics that actually matter for an early-stage consumer app",
   "type": "module",
   "homepage": "https://aswin-dot.github.io/startboard",
   "repository": {

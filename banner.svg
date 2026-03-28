@@ -1,9 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640">
   <defs>
-    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8b7cf7"/>
-      <stop offset="100%" stop-color="#61dafb"/>
-    </linearGradient>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0a0a12"/>
       <stop offset="100%" stop-color="#0f0e1a"/>
@@ -12,107 +8,198 @@
       <stop offset="0%" stop-color="#1a1a2e"/>
       <stop offset="100%" stop-color="#13132a"/>
     </linearGradient>
-    <linearGradient id="line1" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#8b7cf7"/>
-      <stop offset="100%" stop-color="#61dafb"/>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6c63ff"/>
+      <stop offset="100%" stop-color="#43e97b"/>
     </linearGradient>
-    <linearGradient id="line2" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#61dafb"/>
-      <stop offset="100%" stop-color="#8b7cf7"/>
-    </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="20" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="glow1">
+      <feGaussianBlur stdDeviation="40" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
 
   <!-- Background -->
   <rect width="1280" height="640" fill="url(#bgGrad)"/>
 
-  <!-- Subtle grid pattern -->
-  <g opacity="0.03">
-    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(64,0)" />
-    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(128,0)" />
-    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(192,0)" />
-    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(256,0)" />
-    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(320,0)" />
-    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,64)" />
-    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,128)" />
-    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,192)" />
-    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,256)" />
-    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,320)" />
+  <!-- Subtle grid -->
+  <g opacity="0.025">
+    <line x1="213" y1="0" x2="213" y2="640" stroke="#fff" stroke-width="0.5"/>
+    <line x1="426" y1="0" x2="426" y2="640" stroke="#fff" stroke-width="0.5"/>
+    <line x1="640" y1="0" x2="640" y2="640" stroke="#fff" stroke-width="0.5"/>
+    <line x1="853" y1="0" x2="853" y2="640" stroke="#fff" stroke-width="0.5"/>
+    <line x1="1066" y1="0" x2="1066" y2="640" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="160" x2="1280" y2="160" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="320" x2="1280" y2="320" stroke="#fff" stroke-width="0.5"/>
+    <line x1="0" y1="480" x2="1280" y2="480" stroke="#fff" stroke-width="0.5"/>
   </g>
 
   <!-- Ambient glow orbs -->
-  <circle cx="200" cy="320" r="200" fill="#8b7cf7" opacity="0.04" filter="url(#glow)"/>
-  <circle cx="1080" cy="320" r="200" fill="#61dafb" opacity="0.04" filter="url(#glow)"/>
+  <circle cx="180" cy="300" r="220" fill="#6c63ff" opacity="0.03" filter="url(#glow1)"/>
+  <circle cx="1100" cy="350" r="200" fill="#43e97b" opacity="0.025" filter="url(#glow1)"/>
+  <circle cx="640" cy="500" r="180" fill="#f7971e" opacity="0.02" filter="url(#glow1)"/>
 
   <!-- Title -->
-  <text x="640" y="130" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" fill="white" letter-spacing="-2">startboard</text>
+  <text x="640" y="72" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" fill="white" letter-spacing="-2">startboard</text>
 
   <!-- Accent underline -->
-  <rect x="530" y="148" width="220" height="4" rx="2" fill="url(#accent)"/>
+  <rect x="540" y="86" width="200" height="3" rx="1.5" fill="url(#accent)"/>
 
   <!-- Subtitle -->
-  <text x="640" y="190" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#8a8aaa" letter-spacing="0.5">The 4 metrics that actually matter for an early-stage consumer app</text>
+  <text x="640" y="118" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#6a6a8a" letter-spacing="0.3">The 6 metrics that actually matter for an early-stage consumer app</text>
 
-  <!-- Metric Cards - 2x2 Grid -->
-  <!-- Card 1: Retention (top-left) -->
-  <g transform="translate(320, 230)">
-    <rect width="260" height="150" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
-    <text x="20" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6a6a8a" letter-spacing="1" text-transform="uppercase">D7 RETENTION</text>
-    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="white">24%</text>
-    <text x="110" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#4ade80">+3.2%</text>
-    <!-- Mini chart line -->
-    <polyline points="20,120 50,115 80,105 110,110 140,95 170,88 200,82 230,75 240,70" fill="none" stroke="url(#line1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <polyline points="20,120 50,115 80,105 110,110 140,95 170,88 200,82 230,75 240,70 240,135 20,135" fill="url(#line1)" opacity="0.08"/>
+  <!-- ============================================ -->
+  <!-- 3x2 METRIC CARD GRID                        -->
+  <!-- Grid: 3 cols x 2 rows                       -->
+  <!-- Card size: 350 x 155                         -->
+  <!-- Gap: 24                                      -->
+  <!-- Total width: 350*3 + 24*2 = 1098             -->
+  <!-- Left offset: (1280-1098)/2 = 91              -->
+  <!-- Row 1 y=148, Row 2 y=327                     -->
+  <!-- ============================================ -->
+
+  <!-- ===== Card 1: Time to First Order (row1, col1) ===== -->
+  <g transform="translate(91, 148)">
+    <rect width="350" height="155" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <!-- Accent top bar -->
+    <rect x="0" y="0" width="350" height="2" rx="1" fill="#6c63ff" opacity="0.6"/>
+    <text x="20" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6a6a8a" letter-spacing="1.2" font-weight="500">TIME TO FIRST ORDER</text>
+    <!-- Value -->
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="700" fill="white">3.9</text>
+    <text x="108" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#6a6a8a" font-weight="500">days</text>
+    <!-- Down arrow (good for this metric) -->
+    <g transform="translate(175, 54)">
+      <polygon points="0,0 12,0 6,8" fill="#6c63ff"/>
+      <text x="18" y="7" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6c63ff" font-weight="600">-1.2d</text>
+    </g>
+    <!-- Sparkline -->
+    <polyline points="20,125 55,120 85,118 110,112 140,115 165,108 195,105 225,100 255,96 285,92 315,88 330,85"
+      fill="none" stroke="#6c63ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+    <polyline points="20,125 55,120 85,118 110,112 140,115 165,108 195,105 225,100 255,96 285,92 315,88 330,85 330,140 20,140"
+      fill="#6c63ff" opacity="0.06"/>
+    <circle cx="330" cy="85" r="3" fill="#6c63ff"/>
   </g>
 
-  <!-- Card 2: Session Length (top-right) -->
-  <g transform="translate(700, 230)">
-    <rect width="260" height="150" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
-    <text x="20" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6a6a8a" letter-spacing="1">AVG SESSION</text>
-    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="white">2.4<tspan font-size="20" fill="#8a8aaa">d</tspan></text>
-    <text x="130" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#4ade80">+0.6d</text>
+  <!-- ===== Card 2: Average Order Value (row1, col2) ===== -->
+  <g transform="translate(465, 148)">
+    <rect width="350" height="155" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <rect x="0" y="0" width="350" height="2" rx="1" fill="#43e97b" opacity="0.6"/>
+    <text x="20" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6a6a8a" letter-spacing="1.2" font-weight="500">AVERAGE ORDER VALUE</text>
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="700" fill="white">&#x20B9;397.4</text>
+    <!-- Up arrow -->
+    <g transform="translate(200, 54)">
+      <polygon points="6,0 0,8 12,8" fill="#43e97b"/>
+      <text x="18" y="7" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#43e97b" font-weight="600">+12%</text>
+    </g>
     <!-- Mini bar chart -->
-    <rect x="20" y="105" width="22" height="30" rx="3" fill="#8b7cf7" opacity="0.4"/>
-    <rect x="50" y="95" width="22" height="40" rx="3" fill="#8b7cf7" opacity="0.5"/>
-    <rect x="80" y="100" width="22" height="35" rx="3" fill="#8b7cf7" opacity="0.55"/>
-    <rect x="110" y="88" width="22" height="47" rx="3" fill="#8b7cf7" opacity="0.65"/>
-    <rect x="140" y="92" width="22" height="43" rx="3" fill="#8b7cf7" opacity="0.7"/>
-    <rect x="170" y="82" width="22" height="53" rx="3" fill="#8b7cf7" opacity="0.8"/>
-    <rect x="200" y="78" width="22" height="57" rx="3" fill="url(#accent)" opacity="0.9"/>
-    <rect x="230" y="85" width="22" height="50" rx="3" fill="url(#accent)"/>
+    <g opacity="0.8">
+      <rect x="20" y="112" width="24" height="25" rx="3" fill="#43e97b" opacity="0.25"/>
+      <rect x="52" y="106" width="24" height="31" rx="3" fill="#43e97b" opacity="0.3"/>
+      <rect x="84" y="108" width="24" height="29" rx="3" fill="#43e97b" opacity="0.35"/>
+      <rect x="116" y="100" width="24" height="37" rx="3" fill="#43e97b" opacity="0.4"/>
+      <rect x="148" y="104" width="24" height="33" rx="3" fill="#43e97b" opacity="0.45"/>
+      <rect x="180" y="96" width="24" height="41" rx="3" fill="#43e97b" opacity="0.5"/>
+      <rect x="212" y="92" width="24" height="45" rx="3" fill="#43e97b" opacity="0.6"/>
+      <rect x="244" y="88" width="24" height="49" rx="3" fill="#43e97b" opacity="0.7"/>
+      <rect x="276" y="84" width="24" height="53" rx="3" fill="#43e97b" opacity="0.8"/>
+      <rect x="308" y="80" width="24" height="57" rx="3" fill="#43e97b" opacity="0.9"/>
+    </g>
   </g>
 
-  <!-- Card 3: ARPU (bottom-left) -->
-  <g transform="translate(320, 400)">
-    <rect width="260" height="150" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
-    <text x="20" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6a6a8a" letter-spacing="1">ARPU</text>
-    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="white">&#x20B9;312</text>
-    <text x="130" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#4ade80">+18%</text>
-    <!-- Mini chart line -->
-    <polyline points="20,125 55,118 90,120 120,108 150,100 180,95 210,85 240,78" fill="none" stroke="url(#line2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <polyline points="20,125 55,118 90,120 120,108 150,100 180,95 210,85 240,78 240,135 20,135" fill="url(#line2)" opacity="0.08"/>
-    <!-- Dot at end -->
-    <circle cx="240" cy="78" r="4" fill="#61dafb"/>
+  <!-- ===== Card 3: DAU/MAU (row1, col3) ===== -->
+  <g transform="translate(839, 148)">
+    <rect width="350" height="155" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <rect x="0" y="0" width="350" height="2" rx="1" fill="#f7971e" opacity="0.6"/>
+    <text x="20" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6a6a8a" letter-spacing="1.2" font-weight="500">DAU / MAU</text>
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="700" fill="white">14.6<tspan font-size="22" fill="#6a6a8a">%</tspan></text>
+    <!-- Up arrow -->
+    <g transform="translate(175, 54)">
+      <polygon points="6,0 0,8 12,8" fill="#f7971e"/>
+      <text x="18" y="7" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#f7971e" font-weight="600">+2.1%</text>
+    </g>
+    <!-- Sparkline -->
+    <polyline points="20,130 50,128 80,125 110,122 140,120 170,116 200,118 230,112 260,108 290,105 320,100 330,97"
+      fill="none" stroke="#f7971e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+    <polyline points="20,130 50,128 80,125 110,122 140,120 170,116 200,118 230,112 260,108 290,105 320,100 330,97 330,140 20,140"
+      fill="#f7971e" opacity="0.06"/>
+    <circle cx="330" cy="97" r="3" fill="#f7971e"/>
   </g>
 
-  <!-- Card 4: Activation (bottom-right) -->
-  <g transform="translate(700, 400)">
-    <rect width="260" height="150" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
-    <text x="20" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6a6a8a" letter-spacing="1">ACTIVATION RATE</text>
-    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="white">68%</text>
-    <text x="120" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#4ade80">+5.1%</text>
-    <!-- Circular progress indicator -->
-    <circle cx="210" cy="100" r="32" fill="none" stroke="#1a1a3a" stroke-width="6"/>
-    <circle cx="210" cy="100" r="32" fill="none" stroke="url(#accent)" stroke-width="6" stroke-dasharray="137 200" stroke-linecap="round" transform="rotate(-90, 210, 100)"/>
-    <text x="210" y="105" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="white">68%</text>
+  <!-- ===== Card 4: Repeat Order Rate (row2, col1) ===== -->
+  <g transform="translate(91, 327)">
+    <rect width="350" height="155" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <rect x="0" y="0" width="350" height="2" rx="1" fill="#43e97b" opacity="0.6"/>
+    <text x="20" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6a6a8a" letter-spacing="1.2" font-weight="500">REPEAT ORDER RATE</text>
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="700" fill="white">31.1<tspan font-size="22" fill="#6a6a8a">%</tspan></text>
+    <!-- Up arrow -->
+    <g transform="translate(175, 54)">
+      <polygon points="6,0 0,8 12,8" fill="#43e97b"/>
+      <text x="18" y="7" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#43e97b" font-weight="600">+4.8%</text>
+    </g>
+    <!-- Circular progress ring -->
+    <circle cx="295" cy="100" r="30" fill="none" stroke="#1a1a3a" stroke-width="5"/>
+    <circle cx="295" cy="100" r="30" fill="none" stroke="#43e97b" stroke-width="5"
+      stroke-dasharray="58.6 188.5" stroke-linecap="round" transform="rotate(-90, 295, 100)" opacity="0.8"/>
+    <text x="295" y="105" text-anchor="middle" font-family="monospace" font-size="12" font-weight="600" fill="#43e97b">31%</text>
   </g>
+
+  <!-- ===== Card 5: Customer Acquisition Cost (row2, col2) ===== -->
+  <g transform="translate(465, 327)">
+    <rect width="350" height="155" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <rect x="0" y="0" width="350" height="2" rx="1" fill="#f7971e" opacity="0.6"/>
+    <text x="20" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6a6a8a" letter-spacing="1.2" font-weight="500">CUSTOMER ACQUISITION COST</text>
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="700" fill="white">&#x20B9;306.6</text>
+    <!-- Down arrow (good for cost) -->
+    <g transform="translate(210, 54)">
+      <polygon points="0,0 12,0 6,8" fill="#f7971e"/>
+      <text x="18" y="7" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#f7971e" font-weight="600">-8.3%</text>
+    </g>
+    <!-- Sparkline trending down (good) -->
+    <polyline points="20,90 50,93 80,96 110,100 140,98 170,103 200,108 230,112 260,115 290,118 320,122 330,125"
+      fill="none" stroke="#f7971e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+    <polyline points="20,90 50,93 80,96 110,100 140,98 170,103 200,108 230,112 260,115 290,118 320,122 330,125 330,140 20,140"
+      fill="#f7971e" opacity="0.05"/>
+    <!-- Reversed — show as declining line for cost going down -->
+    <polyline points="20,125 50,122 80,118 110,115 140,117 170,112 200,108 230,103 260,100 290,96 320,93 330,90"
+      fill="none" stroke="#f7971e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+    <polyline points="20,125 50,122 80,118 110,115 140,117 170,112 200,108 230,103 260,100 290,96 320,93 330,90 330,140 20,140"
+      fill="#f7971e" opacity="0.06"/>
+    <circle cx="330" cy="90" r="3" fill="#f7971e"/>
+  </g>
+
+  <!-- ===== Card 6: Drop-off Screens (row2, col3) ===== -->
+  <g transform="translate(839, 327)">
+    <rect width="350" height="155" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <rect x="0" y="0" width="350" height="2" rx="1" fill="#ff6584" opacity="0.6"/>
+    <text x="20" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6a6a8a" letter-spacing="1.2" font-weight="500">DROP-OFF SCREENS</text>
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="700" fill="white">68<tspan font-size="22" fill="#6a6a8a">%</tspan></text>
+    <text x="115" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#ff6584" font-weight="500">top drop</text>
+    <!-- Funnel / stacked bars showing drop-off -->
+    <g opacity="0.85">
+      <rect x="20" y="92" width="310" height="10" rx="3" fill="#ff6584" opacity="0.15"/>
+      <rect x="20" y="92" width="310" height="10" rx="3" fill="#ff6584" opacity="0.3"/>
+
+      <rect x="20" y="106" width="240" height="10" rx="3" fill="#ff6584" opacity="0.15"/>
+      <rect x="20" y="106" width="240" height="10" rx="3" fill="#ff6584" opacity="0.4"/>
+
+      <rect x="20" y="120" width="150" height="10" rx="3" fill="#ff6584" opacity="0.15"/>
+      <rect x="20" y="120" width="150" height="10" rx="3" fill="#ff6584" opacity="0.55"/>
+
+      <rect x="20" y="134" width="100" height="10" rx="3" fill="#ff6584" opacity="0.15"/>
+      <rect x="20" y="134" width="100" height="10" rx="3" fill="#ff6584" opacity="0.7"/>
+    </g>
+    <!-- Labels for funnel -->
+    <text x="336" y="101" font-family="monospace" font-size="9" fill="#6a6a8a" text-anchor="end">100%</text>
+    <text x="336" y="115" font-family="monospace" font-size="9" fill="#6a6a8a" text-anchor="end">77%</text>
+    <text x="336" y="129" font-family="monospace" font-size="9" fill="#6a6a8a" text-anchor="end">48%</text>
+    <text x="336" y="143" font-family="monospace" font-size="9" fill="#6a6a8a" text-anchor="end">32%</text>
+  </g>
+
+  <!-- Divider line above footer -->
+  <line x1="91" y1="510" x2="1189" y2="510" stroke="#1a1a2e" stroke-width="1"/>
+
+  <!-- Footer tagline -->
+  <text x="91" y="540" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#3a3a5a">Track what matters. Ship what works.</text>
 
   <!-- Watermark -->
-  <text x="1260" y="625" text-anchor="end" font-family="monospace" font-size="12" fill="#3a3a5a">github.com/Aswin-Dot/startboard</text>
+  <text x="1189" y="540" text-anchor="end" font-family="monospace" font-size="12" fill="#3a3a5a">github.com/Aswin-Dot/startboard</text>
 </svg>

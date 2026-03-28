@@ -83,12 +83,14 @@ Click **+ Add Metric** in the header. Pick from the library or choose "Custom Me
 
 ## Deploy
 
+Hosted on GitHub Pages. Deploys automatically on push to `main`.
+
 ```bash
 npm run build
-# Deploy dist/ to Vercel, Netlify, or any static host
+# dist/ is deployed via GitHub Actions → GitHub Pages
 ```
 
-Live demo: [startboard.vercel.app](https://startboard.vercel.app)
+**Live demo:** [aswin-dot.github.io/startboard](https://aswin-dot.github.io/startboard)
 
 ---
 
@@ -97,6 +99,12 @@ Live demo: [startboard.vercel.app](https://startboard.vercel.app)
 This came out of running Pikvita — a hyperlocal grocery marketplace in Bangalore. We had Mixpanel, we had GA4, we had Appsflyer. And every Monday morning I'd open five tabs and spend 20 minutes piecing together the same 4 numbers to figure out if we were growing or dying.
 
 Startboard is the dashboard I wish existed. One screen, the numbers that matter, no setup.
+
+---
+
+## License
+
+MIT
 
 ---
 

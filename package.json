@@ -1,7 +1,15 @@
 {
   "name": "startboard",
   "version": "0.1.0",
+  "description": "The 4 metrics that actually matter for an early-stage consumer app",
   "type": "module",
+  "homepage": "https://aswin-dot.github.io/startboard",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aswin-Dot/startboard.git"
+  },
+  "author": "Aswin Raj",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

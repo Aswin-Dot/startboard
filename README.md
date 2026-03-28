@@ -1,5 +1,7 @@
 # startboard
 
+![startboard banner](./banner.png)
+
 > The 4 metrics that actually matter for an early-stage consumer app — in one screen, no noise.
 
 Built because Mixpanel showed everything except what I needed to decide whether to keep building or pivot. Staring at dashboards full of events and funnels, what I actually needed was 4 numbers: how long it takes a new user to place their first order, what they're spending, whether they're coming back, and which screens are killing conversion.

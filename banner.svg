@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640">
+  <defs>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b7cf7"/>
+      <stop offset="100%" stop-color="#61dafb"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a12"/>
+      <stop offset="100%" stop-color="#0f0e1a"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#13132a"/>
+    </linearGradient>
+    <linearGradient id="line1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b7cf7"/>
+      <stop offset="100%" stop-color="#61dafb"/>
+    </linearGradient>
+    <linearGradient id="line2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#61dafb"/>
+      <stop offset="100%" stop-color="#8b7cf7"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="20" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="640" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03">
+    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(64,0)" />
+    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(128,0)" />
+    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(192,0)" />
+    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(256,0)" />
+    <line x1="0" y1="0" x2="0" y2="640" stroke="#fff" stroke-width="1" transform="translate(320,0)" />
+    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,64)" />
+    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,128)" />
+    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,192)" />
+    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,256)" />
+    <line x1="0" y1="0" x2="1280" y2="0" stroke="#fff" stroke-width="1" transform="translate(0,320)" />
+  </g>
+
+  <!-- Ambient glow orbs -->
+  <circle cx="200" cy="320" r="200" fill="#8b7cf7" opacity="0.04" filter="url(#glow)"/>
+  <circle cx="1080" cy="320" r="200" fill="#61dafb" opacity="0.04" filter="url(#glow)"/>
+
+  <!-- Title -->
+  <text x="640" y="130" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="800" fill="white" letter-spacing="-2">startboard</text>
+
+  <!-- Accent underline -->
+  <rect x="530" y="148" width="220" height="4" rx="2" fill="url(#accent)"/>
+
+  <!-- Subtitle -->
+  <text x="640" y="190" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#8a8aaa" letter-spacing="0.5">The 4 metrics that actually matter for an early-stage consumer app</text>
+
+  <!-- Metric Cards - 2x2 Grid -->
+  <!-- Card 1: Retention (top-left) -->
+  <g transform="translate(320, 230)">
+    <rect width="260" height="150" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <text x="20" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6a6a8a" letter-spacing="1" text-transform="uppercase">D7 RETENTION</text>
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="white">24%</text>
+    <text x="110" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#4ade80">+3.2%</text>
+    <!-- Mini chart line -->
+    <polyline points="20,120 50,115 80,105 110,110 140,95 170,88 200,82 230,75 240,70" fill="none" stroke="url(#line1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="20,120 50,115 80,105 110,110 140,95 170,88 200,82 230,75 240,70 240,135 20,135" fill="url(#line1)" opacity="0.08"/>
+  </g>
+
+  <!-- Card 2: Session Length (top-right) -->
+  <g transform="translate(700, 230)">
+    <rect width="260" height="150" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <text x="20" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6a6a8a" letter-spacing="1">AVG SESSION</text>
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="white">2.4<tspan font-size="20" fill="#8a8aaa">d</tspan></text>
+    <text x="130" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#4ade80">+0.6d</text>
+    <!-- Mini bar chart -->
+    <rect x="20" y="105" width="22" height="30" rx="3" fill="#8b7cf7" opacity="0.4"/>
+    <rect x="50" y="95" width="22" height="40" rx="3" fill="#8b7cf7" opacity="0.5"/>
+    <rect x="80" y="100" width="22" height="35" rx="3" fill="#8b7cf7" opacity="0.55"/>
+    <rect x="110" y="88" width="22" height="47" rx="3" fill="#8b7cf7" opacity="0.65"/>
+    <rect x="140" y="92" width="22" height="43" rx="3" fill="#8b7cf7" opacity="0.7"/>
+    <rect x="170" y="82" width="22" height="53" rx="3" fill="#8b7cf7" opacity="0.8"/>
+    <rect x="200" y="78" width="22" height="57" rx="3" fill="url(#accent)" opacity="0.9"/>
+    <rect x="230" y="85" width="22" height="50" rx="3" fill="url(#accent)"/>
+  </g>
+
+  <!-- Card 3: ARPU (bottom-left) -->
+  <g transform="translate(320, 400)">
+    <rect width="260" height="150" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <text x="20" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6a6a8a" letter-spacing="1">ARPU</text>
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="white">&#x20B9;312</text>
+    <text x="130" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#4ade80">+18%</text>
+    <!-- Mini chart line -->
+    <polyline points="20,125 55,118 90,120 120,108 150,100 180,95 210,85 240,78" fill="none" stroke="url(#line2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="20,125 55,118 90,120 120,108 150,100 180,95 210,85 240,78 240,135 20,135" fill="url(#line2)" opacity="0.08"/>
+    <!-- Dot at end -->
+    <circle cx="240" cy="78" r="4" fill="#61dafb"/>
+  </g>
+
+  <!-- Card 4: Activation (bottom-right) -->
+  <g transform="translate(700, 400)">
+    <rect width="260" height="150" rx="12" fill="url(#cardGrad)" stroke="#2a2a4a" stroke-width="1"/>
+    <text x="20" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6a6a8a" letter-spacing="1">ACTIVATION RATE</text>
+    <text x="20" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="700" fill="white">68%</text>
+    <text x="120" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#4ade80">+5.1%</text>
+    <!-- Circular progress indicator -->
+    <circle cx="210" cy="100" r="32" fill="none" stroke="#1a1a3a" stroke-width="6"/>
+    <circle cx="210" cy="100" r="32" fill="none" stroke="url(#accent)" stroke-width="6" stroke-dasharray="137 200" stroke-linecap="round" transform="rotate(-90, 210, 100)"/>
+    <text x="210" y="105" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="white">68%</text>
+  </g>
+
+  <!-- Watermark -->
+  <text x="1260" y="625" text-anchor="end" font-family="monospace" font-size="12" fill="#3a3a5a">github.com/Aswin-Dot/startboard</text>
+</svg>

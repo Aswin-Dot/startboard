@@ -591,6 +591,18 @@ export default function App() {
   const [showExport, setShowExport] = useState(false);
   const CORE_IDS = ['time-to-order', 'aov', 'dau-mau', 'dropoff', 'repeat-order-rate', 'cac'];
 
+  // Migrate: ensure all core panels exist (handles upgrades from 4 → 6 core)
+  React.useEffect(() => {
+    const existingIds = new Set(panels.map(p => p.id));
+    const missing = DEFAULT_PANELS.filter(dp => CORE_IDS.includes(dp.id) && !existingIds.has(dp.id));
+    if (missing.length > 0) {
+      // Insert missing core panels before the first custom panel
+      const coreExisting = panels.filter(p => CORE_IDS.includes(p.id));
+      const custom = panels.filter(p => !CORE_IDS.includes(p.id));
+      setPanels([...coreExisting, ...missing, ...custom]);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const dragRef = useRef(null);
   const dragOverRef = useRef(null);
 
